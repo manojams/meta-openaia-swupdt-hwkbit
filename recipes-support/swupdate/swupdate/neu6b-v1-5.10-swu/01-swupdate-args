@@ -1,0 +1,4 @@
+source /etc/swupdate/swupdate.env
+SWUPDATE_SURICATTA_ARGS="-i neu6b-v1 -g 44f7e0fc67919b3144f3f07c404139d9"
+SWUPDATE_ARGS="${SWUPDATE_ARGS}  -H neu6b-v1:1.0 -e stable,copy2 -f ${SWUPDATE_CONF_FILE} -l 5"
+
