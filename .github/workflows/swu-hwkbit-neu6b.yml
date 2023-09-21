@@ -1,0 +1,34 @@
+name: neu2a yocto Build
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: neu2a yocto Build
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Prepare workspace
+        id: prepare_workspace
+        run: |
+          export LC_ALL="en_US.UTF-8"
+          pwd
+          ls
+          ls
+
+# Check if the neu2aYctBuild directory exists in the runner's workspace
+      - name: Check if neu2aYctBuild directory exists or create it
+        run: |
+          if [ ! -d "${{ runner.workspace }}/neu2aYctBuild" ]; then
+            cd "${{ runner.workspace }}/../../.."
+          else
+            cd "${{ runner.workspace }}/../../.."
+            pwd
+            ls
+          fi
