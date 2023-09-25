@@ -1,13 +1,14 @@
-name: neu2a yocto Build
+
+name: neu6b swu upload to Hawkbit
 
 on:
   push:
     branches:
-      - main
+      - kirkstone
 
 jobs:
   build:
-    name: neu2a yocto Build
+    name: neu6b swu upload to Hawkbit
     runs-on: self-hosted
 
     steps:
@@ -21,14 +22,30 @@ jobs:
           pwd
           ls
           ls
-
 # Check if the neu2aYctBuild directory exists in the runner's workspace
       - name: Check if neu2aYctBuild directory exists or create it
         run: |
-          if [ ! -d "${{ runner.workspace }}/neu2aYctBuild" ]; then
-            cd "${{ runner.workspace }}/../../.."
-          else
-            cd "${{ runner.workspace }}/../../.."
+            cd "${{ runner.workspace }}"
             pwd
             ls
-          fi
+            cd ../../../
+            pwd
+            ls
+            cd build-v2/tmp-glibc/deploy/images/neu6b-v1-5.10-swu/
+            
+            
+            curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules' \
+            -u 'admin:admin' \
+            -H 'Content-Type: application/json' \
+            -d '[{
+            "vendor": "Edgeble",
+            "name": "Neu6b swu image",
+            "description": "Neu6b update image",
+            "type": "os",
+            "version": "1.0"
+            }]'
+        
+            curl -i -X POST 'http://localhost:8080/rest/v1/softwaremodules/1/artifacts' \
+            -u 'admin:admin' \
+            -H 'Content-Type: multipart/form-data' \
+            -F 'file=@update-image-neu6b-v1-5.10-swu.swu'
